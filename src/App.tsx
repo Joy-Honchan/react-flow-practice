@@ -53,17 +53,31 @@ function App() {
     {
       id: 'e1-2',
       source: '1',
-      target: '2'
+      target: '2',
+      type: 'straight',
+      style: { stroke: 'red' }
     },
     {
       id: 'e1-3',
       source: '1',
-      target: '3'
+      target: '3',
+      type: 'straight',
+      style: { stroke: 'blue' },
+      animated: true
     },
     {
       id: 'e2-4',
       source: '2',
-      target: '4'
+      target: '4',
+      type: 'straight',
+      style: { stroke: 'red' }
+    },
+    {
+      id: 'e1-4',
+      source: '1',
+      target: '4',
+      type: 'straight',
+      style: { stroke: 'black' }
     }
   ]
   const nodeType = useMemo(() => ({ customNode: CustomNode }), [])
