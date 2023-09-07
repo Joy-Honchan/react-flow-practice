@@ -1,35 +1,72 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-// import './App.css'
+import ReactFlow from 'reactflow'
+import type { Node, Edge } from 'reactflow'
 import 'App.css'
+import 'reactflow/dist/style.css'
+
+interface DataType {
+  type: string
+  name: string
+}
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const initialNodes: Node<DataType>[] = [
+    {
+      id: '1',
+      position: { x: 0, y: 0 },
+      data: {
+        type: 'server',
+        name: 'Server_1'
+      }
+    },
+    {
+      id: '2',
+      position: { x: 100, y: 100 },
+      data: {
+        type: 'server',
+        name: 'Server_2'
+      }
+    },
+    {
+      id: '3',
+      position: { x: -100, y: 100 },
+      data: {
+        type: 'pc',
+        name: 'PC_1'
+      }
+    },
+    {
+      id: '4',
+      position: { x: 0, y: 200 },
+      data: {
+        type: 'pc',
+        name: 'PC_2'
+      }
+    }
+  ]
+  const initialEdges: Edge[] = [
+    {
+      id: 'e1-2',
+      source: '1',
+      target: '2'
+    },
+    {
+      id: 'e1-3',
+      source: '1',
+      target: '3'
+    },
+    {
+      id: 'e2-4',
+      source: '2',
+      target: '4'
+    }
+  ]
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div
+      className="flow-container"
+      style={{ width: '500px', height: '500px', border: '3px solid black' }}
+    >
+      <ReactFlow fitView nodes={initialNodes} edges={initialEdges} />
+    </div>
   )
 }
 
