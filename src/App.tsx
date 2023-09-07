@@ -1,86 +1,17 @@
-import ReactFlow from 'reactflow'
-import type { Node, Edge } from 'reactflow'
-import { DataType } from 'types'
+import { useMemo } from 'react'
+import ReactFlow, { useNodesState, useEdgesState } from 'reactflow'
 import CustomNode from 'components/CustomNode'
+
+import { initialNodes, initialEdges } from 'data/flowData'
+
 import 'App.css'
 import 'reactflow/dist/style.css'
-import { useMemo } from 'react'
 
 function App() {
-  const initialNodes: Node<DataType>[] = [
-    {
-      id: '1',
-      position: { x: 0, y: 0 },
-      data: {
-        type: 'server',
-        name: 'Server_1',
-        status: 'online'
-      },
-      type: 'customNode'
-    },
-    {
-      id: '2',
-      position: { x: 100, y: 100 },
-      data: {
-        type: 'server',
-        name: 'Server_2',
-        status: 'offline'
-      },
-      type: 'customNode'
-    },
-    {
-      id: '3',
-      position: { x: -100, y: 100 },
-      data: {
-        type: 'pc',
-        name: 'PC_1',
-        status: 'connecting'
-      },
-      type: 'customNode'
-    },
-    {
-      id: '4',
-      position: { x: 0, y: 200 },
-      data: {
-        type: 'pc',
-        name: 'PC_2',
-        status: 'online'
-      },
-      type: 'customNode'
-    }
-  ]
-  const initialEdges: Edge[] = [
-    {
-      id: 'e1-2',
-      source: '1',
-      target: '2',
-      type: 'straight',
-      style: { stroke: 'red' }
-    },
-    {
-      id: 'e1-3',
-      source: '1',
-      target: '3',
-      type: 'straight',
-      style: { stroke: 'blue' },
-      animated: true
-    },
-    {
-      id: 'e2-4',
-      source: '2',
-      target: '4',
-      type: 'straight',
-      style: { stroke: 'red' }
-    },
-    {
-      id: 'e1-4',
-      source: '1',
-      target: '4',
-      type: 'straight',
-      style: { stroke: 'black' }
-    }
-  ]
   const nodeType = useMemo(() => ({ customNode: CustomNode }), [])
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
+
   return (
     <div
       className="flow-container"
@@ -88,8 +19,10 @@ function App() {
     >
       <ReactFlow
         fitView
-        nodes={initialNodes}
-        edges={initialEdges}
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
         nodeTypes={nodeType}
       />
     </div>
