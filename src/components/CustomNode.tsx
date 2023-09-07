@@ -4,7 +4,6 @@ import { DataType } from 'types'
 import ComputerIcon from '@mui/icons-material/Computer'
 import StorageIcon from '@mui/icons-material/Storage'
 
-import './CustomNode.css'
 const CustomNode = ({ data }: { data: DataType }) => {
   const icon = useMemo(() => {
     const style = {
@@ -27,9 +26,9 @@ const CustomNode = ({ data }: { data: DataType }) => {
   return (
     <>
       <Handle type="target" position={Position.Top} />
-      <div className="custom-node">
+      <div style={{ margin: ' 0.2rem 0' }}>
         {icon}
-        <div className="custom-node-name">{data.name}</div>
+        <div style={{ fontSize: '12px', fontWeight: '600' }}>{data.name}</div>
       </div>
       <Handle type="source" position={Position.Bottom} />
     </>
