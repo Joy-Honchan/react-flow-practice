@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, MouseEvent, useState, useRef } from 'react'
 import ReactFlow, { useNodesState, useEdgesState, addEdge } from 'reactflow'
 import type { Connection } from 'reactflow'
 import CustomNode from 'components/CustomNode'
@@ -9,8 +9,14 @@ import { initialNodes, initialEdges } from 'data/flowData'
 import 'App.css'
 import 'reactflow/dist/style.css'
 import CustomControl from 'components/CustomControl'
+import PaneMenu, { PaneMenuProps } from 'components/PaneMenu'
 
 function App() {
+  const [menu, setMenu] = useState<Omit<
+    PaneMenuProps,
+    'handleCloseMenu'
+  > | null>(null)
+  const flowRef = useRef<HTMLDivElement>(null)
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
   const nodeType = useMemo(
@@ -28,7 +34,6 @@ function App() {
     }),
     []
   )
-
   // const handleEdge = useCallback((id: string) => {
   //   setEdges((eds) => eds.filter((e) => e.id !== id))
   // }, [])
@@ -52,12 +57,49 @@ function App() {
     setEdges(initialEdges)
   }, [setNodes, setEdges, initialNodes, initialEdges])
 
+  const onPaneContextMenu = useCallback(
+    (event: MouseEvent) => {
+      event.preventDefault()
+
+      const pane = flowRef.current?.getBoundingClientRect()
+      if (!pane) return
+      const menuItem = {
+        top:
+          event.clientY - pane.top < pane.height - 200
+            ? event.clientY - pane.top
+            : undefined,
+        left:
+          event.clientX - pane.left < pane.width - 200
+            ? event.clientX - pane.left
+            : undefined,
+        right:
+          event.clientX - pane.left >= pane.width - 200
+            ? pane.width - (event.clientX - pane.left)
+            : undefined,
+        bottom:
+          event.clientY - pane.top >= pane.height - 200
+            ? pane.height - (event.clientY - pane.top)
+            : undefined
+      }
+      setMenu(menuItem)
+    },
+    [setMenu]
+  )
+
+  const handleCloseMenu = useCallback(() => {
+    setMenu(null)
+  }, [setMenu])
   return (
     <div
       className="flow-container"
-      style={{ width: '800px', height: '500px', border: '3px solid black' }}
+      style={{
+        width: '800px',
+        height: '500px',
+        border: '3px solid black'
+      }}
     >
       <ReactFlow
+        ref={flowRef}
         fitView
         nodes={nodes}
         edges={edges}
@@ -66,8 +108,10 @@ function App() {
         nodeTypes={nodeType}
         edgeTypes={edgeType}
         onConnect={onConnect}
-        // onPaneContextMenu={onPaneContextMenu}
+        onPaneClick={handleCloseMenu}
+        onPaneContextMenu={onPaneContextMenu}
       >
+        {menu && <PaneMenu {...menu} handleCloseMenu={handleCloseMenu} />}
         <CustomControl handleReset={handleReset} />
       </ReactFlow>
     </div>
