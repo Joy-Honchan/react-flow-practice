@@ -79,7 +79,9 @@ function App() {
         bottom:
           event.clientY - pane.top >= pane.height - 200
             ? pane.height - (event.clientY - pane.top)
-            : undefined
+            : undefined,
+        x: event.clientX - pane.left,
+        y: event.clientY - pane.top
       }
       setMenu(menuItem)
     },
