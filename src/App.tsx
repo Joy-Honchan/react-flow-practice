@@ -1,11 +1,6 @@
 import { useCallback, useMemo } from 'react'
-import ReactFlow, {
-  useNodesState,
-  useEdgesState,
-  addEdge,
-  Controls
-} from 'reactflow'
-import type { Connection, EdgeProps } from 'reactflow'
+import ReactFlow, { useNodesState, useEdgesState, addEdge } from 'reactflow'
+import type { Connection } from 'reactflow'
 import CustomNode from 'components/CustomNode'
 import CustomEdge from 'components/CustomEdge'
 
@@ -26,16 +21,17 @@ function App() {
   )
   const edgeType = useMemo(
     () => ({
-      customEdge: (props: EdgeProps) => (
-        <CustomEdge handleEdge={handleEdge} {...props} />
-      )
+      // customEdge: (props: EdgeProps) => (
+      //   <CustomEdge handleEdge={handleEdge} {...props} />
+      // )
+      customEdge: CustomEdge
     }),
     []
   )
 
-  const handleEdge = useCallback((id: string) => {
-    setEdges((eds) => eds.filter((e) => e.id !== id))
-  }, [])
+  // const handleEdge = useCallback((id: string) => {
+  //   setEdges((eds) => eds.filter((e) => e.id !== id))
+  // }, [])
 
   const onConnect = useCallback(
     (params: Connection) =>
@@ -70,6 +66,7 @@ function App() {
         nodeTypes={nodeType}
         edgeTypes={edgeType}
         onConnect={onConnect}
+        // onPaneContextMenu={onPaneContextMenu}
       >
         <CustomControl handleReset={handleReset} />
       </ReactFlow>

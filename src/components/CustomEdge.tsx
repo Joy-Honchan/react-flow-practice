@@ -3,11 +3,12 @@ import {
   BaseEdge,
   EdgeLabelRenderer,
   EdgeProps,
-  getBezierPath
+  getBezierPath,
+  useReactFlow
 } from 'reactflow'
 
 interface PropType extends EdgeProps {
-  handleEdge: (id: string) => void
+  // handleEdge: (id: string) => void
 }
 const CustomEdge = ({
   id,
@@ -17,9 +18,9 @@ const CustomEdge = ({
   targetY,
   sourcePosition,
   targetPosition,
-  markerEnd,
-  handleEdge
-}: PropType) => {
+  markerEnd
+}: // handleEdge
+PropType) => {
   const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,
@@ -28,9 +29,11 @@ const CustomEdge = ({
     targetY,
     targetPosition
   })
+  const { setEdges } = useReactFlow()
 
   const onEdgeClick = (_: MouseEvent<HTMLButtonElement>, id: string) => {
-    handleEdge(id)
+    // handleEdge(id)
+    setEdges((eds) => eds.filter((e) => e.id !== id))
   }
 
   return (
@@ -54,5 +57,4 @@ const CustomEdge = ({
   )
 }
 
-// export default { customEdge: CustomEdge }
 export default CustomEdge
