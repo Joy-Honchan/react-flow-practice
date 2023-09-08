@@ -29,7 +29,7 @@ const CustomEdge = ({
     targetPosition
   })
 
-  const onEdgeClick = (evt: MouseEvent<HTMLButtonElement>, id: string) => {
+  const onEdgeClick = (_: MouseEvent<HTMLButtonElement>, id: string) => {
     handleEdge(id)
   }
 

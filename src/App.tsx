@@ -10,7 +10,7 @@ import 'App.css'
 import 'reactflow/dist/style.css'
 
 function App() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
+  const [nodes, _, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
   const nodeType = useMemo(
     () => ({
@@ -48,7 +48,7 @@ function App() {
   return (
     <div
       className="flow-container"
-      style={{ width: '500px', height: '500px', border: '3px solid black' }}
+      style={{ width: '800px', height: '500px', border: '3px solid black' }}
     >
       <ReactFlow
         fitView
