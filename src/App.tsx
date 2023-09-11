@@ -10,6 +10,7 @@ import 'App.css'
 import 'reactflow/dist/style.css'
 import CustomControl from 'components/CustomControl'
 import PaneMenu, { PaneMenuProps } from 'components/PaneMenu'
+import InfoPanel from 'components/InfoPanel'
 
 function App() {
   const [menu, setMenu] = useState<Omit<
@@ -102,6 +103,7 @@ function App() {
         onPaneContextMenu={onPaneContextMenu}
       >
         {menu && <PaneMenu {...menu} handleCloseMenu={handleCloseMenu} />}
+        <InfoPanel />
         <CustomControl handleReset={handleReset} />
       </ReactFlow>
     </div>

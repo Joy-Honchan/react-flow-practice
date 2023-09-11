@@ -22,6 +22,37 @@
   }
 }
 
+.info-container {
+  text-align: start;
+  background-color: #d8c4f4;
+  padding: 0.5rem;
+  border-radius: 8px;
+  .title {
+    display: flex;
+    justify-content: space-between;
+    & div {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      & button {
+        align-self: flex-end;
+        background-color: transparent;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+      }
+    }
+  }
+  & p {
+    margin: 0.5rem 0;
+  }
+}
+
+.display-none {
+  display: none !important;
+}
+
 .delete-btn {
   border-radius: 50%;
   background-color: #bababa;
