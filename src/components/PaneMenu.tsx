@@ -90,7 +90,7 @@ const PaneMenu = ({
       data: {
         name: deviceName,
         type: deviceType,
-        status: 'offline'
+        status: 'new'
       },
       type: 'customNode'
     }
