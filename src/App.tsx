@@ -31,9 +31,6 @@ function App() {
     }),
     []
   )
-  // const handleEdge = useCallback((id: string) => {
-  //   setEdges((eds) => eds.filter((e) => e.id !== id))
-  // }, [])
 
   const onConnect = useCallback(
     (params: Connection) =>
@@ -90,14 +87,7 @@ function App() {
   }, [setMenu])
 
   return (
-    <div
-      className="flow-container"
-      style={{
-        width: '800px',
-        height: '500px',
-        border: '3px solid black'
-      }}
-    >
+    <div className="flow-container">
       <ReactFlow
         ref={flowRef}
         fitView

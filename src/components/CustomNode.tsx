@@ -34,12 +34,14 @@ const CustomNode = ({ id, data }: NodeProps) => {
   return (
     <>
       <Handle type="target" position={Position.Top} />
-      <div style={{ margin: ' 0.2rem 0' }}>
+      <div className="custom-node">
         {icon}
-        <div style={{ fontSize: '12px', fontWeight: '600' }}>
-          {data.name}
+        <div className="node-label">
+          <span>{data.name}</span>
           {data.status === 'new' ? (
-            <button onClick={handleNodeDelete}>x</button>
+            <button className="delete-btn" onClick={handleNodeDelete}>
+              x
+            </button>
           ) : null}
         </div>
       </div>

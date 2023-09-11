@@ -7,9 +7,7 @@ import {
   useReactFlow
 } from 'reactflow'
 
-interface PropType extends EdgeProps {
-  // handleEdge: (id: string) => void
-}
+interface PropType extends EdgeProps {}
 const CustomEdge = ({
   id,
   sourceX,
@@ -19,8 +17,7 @@ const CustomEdge = ({
   sourcePosition,
   targetPosition,
   markerEnd
-}: // handleEdge
-PropType) => {
+}: PropType) => {
   const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,
@@ -32,7 +29,6 @@ PropType) => {
   const { setEdges } = useReactFlow()
 
   const onEdgeClick = (_: MouseEvent<HTMLButtonElement>, id: string) => {
-    // handleEdge(id)
     setEdges((eds) => eds.filter((e) => e.id !== id))
   }
 
@@ -41,16 +37,17 @@ PropType) => {
       <BaseEdge path={edgePath} markerEnd={markerEnd} />
       <EdgeLabelRenderer>
         <div
+          className="custom-edge"
           style={{
-            position: 'absolute',
-            transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-            fontSize: 12,
-            // everything inside EdgeLabelRenderer has no pointer events by default
-            // if you have an interactive element, set pointer-events: all
-            pointerEvents: 'all'
+            transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`
           }}
         >
-          <button onClick={(event) => onEdgeClick(event, id)}>×</button>
+          <button
+            className="delete-btn"
+            onClick={(event) => onEdgeClick(event, id)}
+          >
+            x
+          </button>
         </div>
       </EdgeLabelRenderer>
     </>

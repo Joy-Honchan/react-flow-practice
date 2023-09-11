@@ -6,4 +6,76 @@
 }
 .flow-container {
   background-color: aliceblue;
+  width: 800px;
+  height: 500px;
+  border: 3px solid black;
+}
+
+.custom-node {
+  margin: 0.2rem 0;
+  .node-label {
+    font-size: 12px;
+    font-weight: 600;
+    & span {
+      margin-right: 4px;
+    }
+  }
+}
+
+.delete-btn {
+  border-radius: 50%;
+  background-color: #bababa;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+}
+
+.custom-edge {
+  position: absolute;
+  /* everything inside EdgeLabelRenderer has no pointer events by default
+  if you have an interactive element, set pointer-events: all */
+  pointer-events: all;
+}
+
+.pane-menu {
+  z-index: 10;
+  position: absolute;
+  border: 2px solid black;
+  max-width: 200px;
+  padding: 1.5rem 0 0 0;
+  background-color: white;
+}
+.name-input {
+  line-height: 1.5;
+}
+.input-error {
+  border: 1px solid red;
+}
+.error-msg {
+  color: red;
+}
+
+.type-container {
+  margin-top: 2rem;
+}
+
+div.shrink-mt {
+  margin-top: 0.5rem;
+}
+
+.type-select {
+  height: 25.98px;
+  width: 177px;
+  padding: 1px 2px;
+  font-size: 1rem;
+}
+.btn-container {
+  display: flex;
+  margin-top: 2rem;
+  .btn {
+    display: block;
+    flex: 1;
+    padding: 0.4rem 0.5rem;
+  }
 }

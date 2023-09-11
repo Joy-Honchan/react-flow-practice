@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useReducer } from 'react'
+import { ChangeEvent, useReducer } from 'react'
 import { useReactFlow } from 'reactflow'
 import type { Node } from 'reactflow'
 import { DataType } from 'types'
@@ -37,8 +37,6 @@ const PaneMenu = ({
     },
     dispatch
   ] = useReducer(formReducer, initialValue)
-  // const [deviceName, setDeviceName] = useState('')
-  // const [deviceType, setDeviceType] = useState('')
   const { project, setNodes, getNodes } = useReactFlow<DataType>()
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -52,11 +50,6 @@ const PaneMenu = ({
       type: `${e.currentTarget.id}-error`,
       payload: ''
     })
-    // if (e.currentTarget.id === 'name') {
-    //   setDeviceName(e.currentTarget.value)
-    // } else {
-    //   setDeviceType(e.currentTarget.value)
-    // }
   }
   const handleAddNode = () => {
     const nodes = getNodes()
@@ -100,24 +93,17 @@ const PaneMenu = ({
 
   const handleCancel = () => {
     dispatch({ type: 'clear-inputs', payload: '' })
-    // setDeviceName(() => '')
-    // setDeviceType(() => '')
     handleCloseMenu()
   }
 
   return (
     <div
+      className="pane-menu"
       style={{
-        zIndex: 10,
-        position: 'absolute',
         top,
         left,
         right,
-        bottom,
-        border: '2px solid black',
-        maxWidth: '200px',
-        padding: '1.5rem 0 0 0',
-        backgroundColor: 'white'
+        bottom
       }}
     >
       <div>
@@ -126,53 +112,33 @@ const PaneMenu = ({
           value={deviceName}
           onChange={handleChange}
           id="name"
-          style={{
-            lineHeight: '1.5',
-            border: deviceNameError ? '1px solid red' : ''
-          }}
+          className={`name-input ${deviceNameError ? 'input-error' : null}`}
         />
         {deviceNameError ? (
-          <span style={{ color: 'red' }}>{deviceNameError}</span>
+          <span className="error-msg">{deviceNameError}</span>
         ) : null}
       </div>
-      <div style={{ marginTop: deviceNameError ? 0 : '1.5rem' }}>
+      <div className={`${deviceNameError ? 'shrink-mt' : null} type-container`}>
         <label htmlFor="type">Device Type</label>
         <select
           value={deviceType}
           onChange={handleChange}
           id="type"
-          style={{
-            height: '25.98px',
-            width: '177px',
-            padding: '1px 2px',
-            fontSize: '1rem',
-            border: deviceTypeError ? '1px solid red' : ''
-          }}
+          className={`type-select ${deviceTypeError ? 'input-error' : null}`}
         >
           <option hidden value="" />
           <option value="server">Server</option>
           <option value="pc">PC</option>
         </select>
         {deviceTypeError ? (
-          <span style={{ color: 'red' }}>{deviceTypeError}</span>
+          <span className="error-msg">{deviceTypeError}</span>
         ) : null}
       </div>
-      <div
-        style={{
-          display: 'flex',
-          marginTop: deviceTypeError ? '.5rem' : '2rem'
-        }}
-      >
-        <button
-          onClick={handleAddNode}
-          style={{ display: 'block', flex: 1, padding: '0.4rem 0.5rem' }}
-        >
+      <div className={`${deviceTypeError ? 'shrink-mt' : null} btn-container`}>
+        <button onClick={handleAddNode} className="btn">
           Add Node
         </button>
-        <button
-          onClick={handleCancel}
-          style={{ display: 'block', flex: 1, padding: '0.4rem 0.5rem' }}
-        >
+        <button onClick={handleCancel} className="btn">
           Cancel
         </button>
       </div>
