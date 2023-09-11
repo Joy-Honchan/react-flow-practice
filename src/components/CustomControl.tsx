@@ -4,7 +4,7 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt'
 const CustomControl = ({ handleReset }: { handleReset: () => void }) => {
   return (
     <Controls>
-      <ControlButton onClick={handleReset}>
+      <ControlButton onClick={handleReset} title="reset data">
         <RestartAltIcon />
       </ControlButton>
     </Controls>
