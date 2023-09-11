@@ -27,9 +27,6 @@ function App() {
   )
   const edgeType = useMemo(
     () => ({
-      // customEdge: (props: EdgeProps) => (
-      //   <CustomEdge handleEdge={handleEdge} {...props} />
-      // )
       customEdge: CustomEdge
     }),
     []
@@ -91,6 +88,7 @@ function App() {
   const handleCloseMenu = useCallback(() => {
     setMenu(null)
   }, [setMenu])
+
   return (
     <div
       className="flow-container"

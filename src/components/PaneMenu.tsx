@@ -1,5 +1,5 @@
-import { useState, FormEvent, ChangeEvent } from 'react'
-// import { useReactFlow } from 'reactflow'
+import { useState, ChangeEvent } from 'react'
+import { useReactFlow } from 'reactflow'
 
 export interface PaneMenuProps {
   top?: number
@@ -15,39 +15,51 @@ const PaneMenu = ({
   left,
   right,
   bottom,
-  //   x,
-  //   y,
+  x,
+  y,
   handleCloseMenu
 }: PaneMenuProps) => {
-  const [formValue, _] = useState({
-    name: '',
-    type: ''
-  })
-  //   const { project, setNodes, getNodes } = useReactFlow()
-  const handleChange = <T,>(e: ChangeEvent<T>) => {
-    console.log(e.currentTarget)
+  const [deviceName, setDeviceName] = useState('')
+  const [deviceType, setDeviceType] = useState('')
+  const { project, setNodes, getNodes } = useReactFlow()
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    if (e.currentTarget.id === 'name') {
+      setDeviceName(e.currentTarget.value)
+    } else {
+      setDeviceType(e.currentTarget.value)
+    }
   }
-  const handleAddNode = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    // const nodes = getNodes()
-    // const nextNodeNumber =
-    //   Math.max(...nodes.map(({ id }) => Number(id.match(/\d+/)))) + 1
-    // const newNode = {
-    //   id: `${nextNodeNumber}`,
-    //   position: project({
-    //     x,
-    //     y
-    //   }),
-    //   data: {
-    //     name: 'unKnown',
-    //     type: 'server',
-    //     status: 'offline'
-    //   },
-    //   type: 'customNode'
-    // }
+  const handleAddNode = () => {
+    const nodes = getNodes()
+    const nextNodeNumber =
+      Math.max(...nodes.map(({ id }) => Number(id.match(/\d+/)))) + 1
+    const newNode = {
+      id: `${nextNodeNumber}`,
+      position: project({
+        x,
+        y
+      }),
+      data: {
+        name: deviceName,
+        type: deviceType,
+        status: 'offline'
+      },
+      type: 'customNode'
+    }
+    setNodes((nds) => nds.concat(newNode))
+    handleCancel()
   }
+
+  const handleCancel = () => {
+    setDeviceName(() => '')
+    setDeviceType(() => '')
+    handleCloseMenu()
+  }
+
   return (
-    <form
+    <div
       style={{
         zIndex: 10,
         position: 'absolute',
@@ -60,12 +72,11 @@ const PaneMenu = ({
         padding: '1.5rem 0 0 0',
         backgroundColor: 'white'
       }}
-      onSubmit={handleAddNode}
     >
       <div>
         <label htmlFor="name">Device Name</label>
         <input
-          value={formValue.name}
+          value={deviceName}
           onChange={handleChange}
           id="name"
           style={{ lineHeight: '1.5' }}
@@ -74,40 +85,36 @@ const PaneMenu = ({
       <div style={{ marginTop: '1rem' }}>
         <label htmlFor="type">Device Type</label>
         <select
-          value={formValue.name}
+          value={deviceType}
           onChange={handleChange}
           id="type"
           style={{
+            height: '25.98px',
             width: '177px',
-            height: '1.5rem',
             padding: '1px 2px',
-            border: '2px solid black',
             fontSize: '1rem'
           }}
         >
-          <option value="server" style={{ fontSize: '1rem' }}>
-            Server
-          </option>
-          <option value="pc" style={{ fontSize: '1rem' }}>
-            PC
-          </option>
+          <option hidden value="" />
+          <option value="server">Server</option>
+          <option value="pc">PC</option>
         </select>
       </div>
       <div style={{ display: 'flex', marginTop: '2rem' }}>
         <button
-          type="submit"
+          onClick={handleAddNode}
           style={{ display: 'block', flex: 1, padding: '0.4rem 0.5rem' }}
         >
           Add Node
         </button>
         <button
+          onClick={handleCancel}
           style={{ display: 'block', flex: 1, padding: '0.4rem 0.5rem' }}
-          onClick={handleCloseMenu}
         >
           Cancel
         </button>
       </div>
-    </form>
+    </div>
   )
 }
 
